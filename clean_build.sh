@@ -22,7 +22,7 @@ fi
 # Initialise Git submodules
 git submodule update --init --recursive
 
-B_CMAKE_FLAGS="-DCMAKE_BUILD_TYPE=$B_BUILD_TYPE $B_CMAKE_FLAGS"
+B_CMAKE_FLAGS="-DCMAKE_BUILD_TYPE=$B_BUILD_TYPE -DBARRIER_BUILD_GUI=OFF $B_CMAKE_FLAGS"
 rm -rf build
 mkdir build || exit 1
 cd build || exit 1
