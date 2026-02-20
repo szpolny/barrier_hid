@@ -18,49 +18,41 @@ BUSTER Rpi OS ( Legacy )
 
 ## Building the solution
 
-You can build the solution by executing:
+To build the solution, you need to install the dependencies and run the build script. This is best done on a Raspberry Pi Zero W running Raspberry Pi OS (Legacy/Buster).
 
+```bash
 git clone https://github.com/karepiu/barrier_hid.git
 cd barrier_hid
+chmod +x *.sh
 ./build.sh
-
-or manually:
-
-git clone https://github.com/karepiu/barrier_hid.git
-cd barrier_hid
-sudo apt update && sudo apt upgrade
-sudo apt install git cmake make xorg-dev g++ libcurl4-openssl-dev \
-                 libavahi-compat-libdnssd-dev libssl-dev libx11-dev \
-                 libqt4-dev qtbase5-dev
-./clean_build.sh
+```
 
 ## Hardware setup 
 
-Raspberry Pi Zero W needs to be setup as OTG device. 
+Raspberry Pi Zero W needs to be configured as a USB OTG Gadget.
 
-1. Connect RPiZw to the PC using OTG cable and port. 
-2. Set correct OTG mode
-   - by executing script 
-        ./otg_mode_setup.sh
-   - manually 
-        echo "dtoverlay=dwc2" | sudo tee -a /boot/config.txt
-        echo "dwc2" | sudo tee -a /etc/modules
-3. Set RPiZw as HID device
-   - by executing script 
-        ./hid_setup.sh
-        
+1. **Enable OTG Mode**: Run the following script and **reboot** your Raspberry Pi.
+   ```bash
+   sudo ./otg_mode_setup.sh
+   sudo reboot
+   ```
+2. **Enable HID Gadget**: Run the HID setup script. **This must be done after every boot** (you can add it to `/etc/rc.local` or create a systemd service).
+   ```bash
+   sudo ./hid_setup.sh
+   ```
+
 ## Usage
 
-barrierc --client --name <your client name> -f --hid /dev/hidg0 /dev/hidg1 /dev/hidg2 1920 1080 <ip of server>
+To start the client and connect to your Barrier server, use the following command:
 
-or
+```bash
+./build/bin/barrierc --client --name <client_name> -f --hid /dev/hidg0 /dev/hidg1 /dev/hidg2 <width> <height> <server_ip>
+```
+*   `<client_name>`: The name of this client as configured on your Barrier server.
+*   `<width> <height>`: The resolution of the monitor connected to the server (e.g., `1920 1080`).
+*   `<server_ip>`: The IP address of your Barrier server.
 
-modify the client name and port in start.sh and execute - ./start.sh
-
-start.sh starts barrierc in forground and uses nohup and & to run it in backround - reason for that is performance. 
-The standrd deamon option in barrier does not work great on RPiZw.
-
-* SSL works but for performance sake I suggest to disable it
+> **Note**: For best performance on Pi Zero, it is recommended to disable SSL on the Barrier server.
 
 ## Limitations/Issues
 
