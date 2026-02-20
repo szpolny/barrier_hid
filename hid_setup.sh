@@ -19,9 +19,9 @@ echo "Raspbery Pi Zero W HID" > strings/0x409/product
 
 A_N="mouse"
 mkdir -p functions/hid.$A_N
-echo 2 > functions/hid.$A_N/protocol
-echo 1 > functions/hid.$A_N/subclass
-echo 3 > functions/hid.$A_N/report_length
+echo 0 > functions/hid.$A_N/protocol
+echo 0 > functions/hid.$A_N/subclass
+echo 6 > functions/hid.$A_N/report_length
 cat "$SRC/mouse.desc" > functions/hid.$A_N/report_desc
 
 B_N="keyboard"

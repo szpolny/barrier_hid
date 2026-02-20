@@ -33,6 +33,14 @@ void HIDMouse::updateButton(ButtonID button, bool press) {
         mask = 0x04;
         break;
 
+    case kButtonExtra0:
+        mask = 0x08;
+        break;
+
+    case kButtonExtra1:
+        mask = 0x10;
+        break;
+
     default:
         mask = 0x00;
         break;
@@ -56,6 +64,7 @@ void HIDMouse::updateWheel(float x, float y) {
     
     LOG((CLOG_DEBUG "%x", m_data[5]));
     
+    m_data[5] = 0x00;
     if ( y < 0 ) {
         m_data[5] = 0xFF;
     }
@@ -64,6 +73,7 @@ void HIDMouse::updateWheel(float x, float y) {
     }
     
     update();
+    m_data[5] = 0x00;
 }
 
 
