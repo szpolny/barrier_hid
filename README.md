@@ -13,15 +13,16 @@ that emulates usb keyboard and mouse ( and touch ).
 
 ## Required hardware
 
-Raspberry Pi Zero W connected to same network as Barrier server 
-BUSTER Rpi OS ( Legacy ) 
+Raspberry Pi Zero W connected to same network as Barrier server.
+
+**Note: Currently only tested on Raspberry Pi Zero 2 W with Raspberry Pi OS Lite.**
 
 ## Building the solution
 
-To build the solution, you need to install the dependencies and run the build script. This is best done on a Raspberry Pi Zero W running Raspberry Pi OS (Legacy/Buster).
+To build the solution, you need to install the dependencies and run the build script. This is best done on a Raspberry Pi Zero W or Zero 2 W running Raspberry Pi OS (Tested using lite).
 
 ```bash
-git clone https://github.com/karepiu/barrier_hid.git
+git clone https://github.com/szpolny/barrier_hid.git
 cd barrier_hid
 chmod +x *.sh
 ./build.sh
