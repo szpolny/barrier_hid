@@ -42,6 +42,38 @@ Raspberry Pi Zero W needs to be configured as a USB OTG Gadget.
    sudo ./hid_setup.sh
    ```
 
+## Network setup
+
+If you need the Pi to join Wi-Fi automatically at another location, configure
+the Wi-Fi profiles locally on the Pi with `nmcli` or NetworkManager connection
+files under `/etc/NetworkManager/system-connections/`.
+
+For multiple known SSIDs, save each one as a separate NetworkManager profile
+and optionally use a boot-time script/service to select the strongest matching
+network. SSH can be enabled on boot with:
+
+```bash
+sudo systemctl enable ssh
+sudo systemctl start ssh
+```
+
+If you want `hid_setup.sh` to run automatically after boot, add a local
+systemd service on the Pi that points to your checkout, for example:
+
+```ini
+[Unit]
+Description=Configure USB HID gadget for barrier_hid
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/<user>/barrier_hid/hid_setup.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+```
+
 ## Usage
 
 To start the client and connect to your Barrier server, use the following command:
@@ -58,5 +90,3 @@ To start the client and connect to your Barrier server, use the following comman
 ## Limitations/Issues
 
 - No clipboard - as Pi Zero is proxy clipboard functionality would require supporting app or mass storage to make it work
-
-
